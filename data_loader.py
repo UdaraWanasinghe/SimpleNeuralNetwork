@@ -6,6 +6,7 @@ TRAINING_LABELS_PATH = 'data/train-labels-idx1-ubyte.gz'
 TESTING_IMAGES_PATH = 'data/t10k-images-idx3-ubyte.gz'
 TESTING_LABELS_PATH = 'data/t10k-labels-idx1-ubyte.gz'
 
+
 def read_images(path):
     with gzip.open(path, 'r') as f:
         # first 4 bytes is a magic number
@@ -20,7 +21,8 @@ def read_images(path):
         # pixel values are 0 to 255
         image_data = f.read()
         images = np.frombuffer(image_data, dtype=np.uint8)\
-            .reshape((image_count, row_count, column_count))
+            .reshape((image_count, row_count * column_count))
+        print(images)
         return images
 
 
