@@ -26,6 +26,8 @@ class NeuralNetwork():
 
     def backprop(self, x, y):
         # this function calculates gradient values for a single training input
+        # show accuracy graph
+        self.init_graph()
         # calculate activations
         a = x
         activations = [x]
@@ -98,10 +100,18 @@ class NeuralNetwork():
                 accuracy = self.evaluate(test_data)
                 print("Epoch ", e, ": ", accuracy)
                 results.append(accuracy)
+                self.plot_graph(results)
 
-    def plot_graph(self, results, test_data_len):
-        t = np.arange(0, len(results), 1)
-        fig, ax = plt.subplots()
-        ax.plot(t, results)
-        ax.set(xlabel='time (s)', ylabel='voltage (mV)',
-               title='About as simple as it gets, folks')
+    def init_graph(self):
+        plt.title("Accuracy over epoch")
+        plt.xlabel("Epoch")
+        plt.ylabel("Accuracy")
+        plt.show(block=False)
+        plt.pause(0.0001)
+
+    def plot_graph(self, results):
+        plt.cla()
+        t = np.arange(1, len(results), 1)
+        plt.plot(t, results)
+        plt.show(block=False)
+        plt.pause(0.0001)
