@@ -26,8 +26,6 @@ class NeuralNetwork():
 
     def backprop(self, x, y):
         # this function calculates gradient values for a single training input
-        # show accuracy graph
-        self.init_graph()
         # calculate activations
         a = x
         activations = [x]
@@ -50,7 +48,7 @@ class NeuralNetwork():
             sum = sums[-l]
             # calculate delta of the previous layer
             delta = np.dot(
-                self.weights[-1 + l].transpose(), delta) * self.act_f.act_dir(sum)
+                self.weights[-1+l].transpose(), delta) * self.act_f.act_dir(sum)
             # calculate gradients
             w_gradients[-l] = np.dot(delta, activations[-l-1].transpose())
             b_gradients[-l] = delta
@@ -85,6 +83,8 @@ class NeuralNetwork():
         then the network will be evaluated against the test data after
         each epoch."""
         results = []
+        # show accuracy graph
+        self.init_graph()
         # iterate through each epoch
         for e in range(epoches):
             # shuffle the training data set

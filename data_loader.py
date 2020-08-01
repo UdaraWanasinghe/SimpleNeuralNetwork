@@ -22,7 +22,6 @@ def read_images(path):
         image_data = f.read()
         images = np.frombuffer(image_data, dtype=np.uint8)\
             .reshape((image_count, row_count * column_count))
-        print(images)
         return images
 
 
@@ -37,3 +36,17 @@ def read_labels(path):
         label_data = f.read()
         labels = np.frombuffer(label_data, dtype=np.uint8)
         return labels
+
+
+def prepare_training_data():
+    images = read_images(TRAINING_IMAGES_PATH)
+    labels = read_labels(TRAINING_LABELS_PATH)
+    data = [(x, y) for x, y in zip(images, labels)]
+    return data
+
+
+def prepare_testing_data():
+    images = read_images(TESTING_IMAGES_PATH)
+    labels = read_labels(TESTING_LABELS_PATH)
+    data = [(x, y) for x, y in zip(images, labels)]
+    return data
