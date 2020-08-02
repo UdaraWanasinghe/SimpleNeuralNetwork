@@ -61,15 +61,15 @@ class NeuralNetwork():
         # calculate average of delta values in the mini batch
         for x, y in mini_batch:
             delta_w_gradients, delta_b_gradients = self.backprop(x, y)
-            w_gradients = [(x + y) / m for x,
+            w_gradients = [(x + y) for x,
                            y in zip(w_gradients, delta_w_gradients)]
-            b_gradients = [(x + y) / m for x,
+            b_gradients = [(x + y) for x,
                            y in zip(b_gradients, delta_b_gradients)]
         # adjust weights and biases
-        self.weights = [w - (learning_rate * d)
+        self.weights = [w - ((learning_rate / m) * d)
                         for w, d in zip(self.weights, w_gradients)]
-        self.biases = [b - (learning_rate * d)
-                       for b, d in zip(self.weights, w_gradients)]
+        self.biases = [b - ((learning_rate / m) * d)
+                       for b, d in zip(self.biases, b_gradients)]
 
     def evaluate(self, test_data):
         # evaluate test data, result is a list of tuples (output_number, desired_output)
@@ -111,7 +111,7 @@ class NeuralNetwork():
 
     def plot_graph(self, results):
         plt.cla()
-        t = np.arange(1, len(results), 1)
+        t = np.arange(0, len(results), 1)
         plt.plot(t, results)
         plt.show(block=False)
         plt.pause(0.0001)

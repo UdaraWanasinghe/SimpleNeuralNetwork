@@ -21,7 +21,7 @@ def read_images(path):
         # pixel values are 0 to 255
         image_data = f.read()
         images = np.frombuffer(image_data, dtype=np.uint8)\
-            .reshape((image_count, row_count * column_count))
+            .reshape((image_count, row_count * column_count, 1))
         return images
 
 
