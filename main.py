@@ -18,7 +18,7 @@ class NeuralNetwork():
 
     def feedforward(self, x):
         # x is the input layer of neural network
-        a = x
+        a = x / 255
         for b, w in zip(self.biases, self.weights):
             z = np.dot(w, a) + b
             a = self.act_f.act(z)
@@ -27,8 +27,8 @@ class NeuralNetwork():
     def backprop(self, x, y):
         # this function calculates gradient values for a single training input
         # calculate activations
-        a = x
-        activations = [x]
+        a = x / 255
+        activations = [a]
         sums = []
         # calculate sums and activations
         for b, w in zip(self.biases, self.weights):
@@ -111,6 +111,9 @@ class NeuralNetwork():
 
     def plot_graph(self, results):
         plt.cla()
+        plt.title("Accuracy over epoch")
+        plt.xlabel("Epoch")
+        plt.ylabel("Accuracy")
         t = np.arange(0, len(results), 1)
         plt.plot(t, results)
         plt.show(block=False)
